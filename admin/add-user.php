@@ -90,39 +90,45 @@
         <div class="row">
           <div class="col-lg-6">
             <div class="card">
+            <h3 class="card-title">Add User</h3>
               <div class="card-body">
-                <h3 class="card-title">Add User</h3>
+                
                 <div class="card-header">
                   <form action="user-pro.php" method="post">
                   <div data-mdb-input-init class="form-outline mb-1">
+                  <label class="form-label">Username</label>
                     <input type="name" name="name" id="form2Example17" class="form-control form-control-lg" required />
-                    <label class="form-label">Username</label>
+                    
                   </div>
                   <div data-mdb-input-init class="form-outline mb-1">
+                  <label class="form-label">Email</label>
                           <input type="email" name="email" id="form2Example17" class="form-control form-control-lg" required />
-                          <label class="form-label">Email</label>
+                          
                         </div>
                         <div data-mdb-input-init class="form-outline mb-1">
-                          
+                        <label class="form-label" for="form2Example17">Access Type</label>
                           <select id="at" name="type" class="form-control form-control-lg">
-                          <option value="admin">p/s</option>
-                          <option value="user">d/s</option>                          
+                          <option value="type">p/s</option>
+                          <option value="type">d/s</option>                          
                           </select>
-                          <label class="form-label" for="form2Example17">Access Type</label>
+                          
                           
                         </div>
                         <div data-mdb-input-init class="form-outline mb-1">
+                        <label class="form-label">Password</label>
                           <input type="password" name="password" id="form2Example17" class="form-control form-control-lg" required />
-                          <label class="form-label">Password</label>
+                          
                         </div>
+                      
                         <div data-mdb-input-init class="form-outline mb-1">
+                        <label class="form-label">Department</label>
                           <input type="name" name="dname" id="form2Example17" class="form-control form-control-lg" required />
-                          <label class="form-label">Department</label>
+                          
                         </div>
 
                   <div class="pt-1 mb-4">
                     <div class="col-4">
-                      <button type="submit" class="btn btn-primary">Add</button>
+                      <button type="submit" class="btn btn-warning">Add</button>
                     </div>
                   </div>
                   </form>

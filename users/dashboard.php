@@ -8,7 +8,7 @@
   <title>Ministry of ICT & National Guidance E-Memo Tracking System</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../admin/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="plugins/select2/css/select2.min.css">
 </head>
 
@@ -28,7 +28,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Admin Dashboard</h1>
+              <h1 class="text-light m-0">User Dashboard</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
@@ -77,21 +77,18 @@
                       </div>
                     </div>
                   </div>
-                  <div class="flex-row">
-                    <div class="pt-1 mb-4 flex-row">
+                  <div class=" d-flex flex-row">
+                    <div class="d-flex flex-row mb-4">
                       <div class="col-4">
-                        <button type="submit" class="btn btn-dark  btn-block">Filter</button>
+                        <button type="submit" class="btn btn-warning ">Filter</button>
                       </div>
                     </div>
-                    <div class="mb-4 flex-row">
+                    <div class="d-flex flex-row mb-4">
                       <div class="col-4">
-                        <button type="submit" class="btn btn-dark  btn-block">Reset</button>
+                        <button type="submit" class="btn btn-warning ">Reset</button>
                       </div>
                     </div>
                   </div>
-
-
-
                 </div>
               </div>
 
@@ -209,6 +206,7 @@
   <script src="plugins/jquery/jquery.min.js"></script>
   <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="plugins/select2/js/select2.full.min.js"></script>
   <script>
     $(function() {

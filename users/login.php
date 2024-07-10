@@ -37,13 +37,15 @@
                         <span class="h4 fw mb-0 d-flex align-items-center mb-3 pb-1">Secretary Registration</span>
 
                         <div data-mdb-input-init class="form-outline mb-1">
+                        <label class="form-label">Username</label>
                           <input type="name" name="name" id="form2Example17" class="form-control form-control-lg" required />
-                          <label class="form-label">Username</label>
+                          
                         </div>                       
                         
                         <div data-mdb-input-init class="form-outline mb-1">
+                        <label class="form-label">Password</label>
                           <input type="password" name="password" id="form2Example27" class="form-control form-control-lg" required />
-                          <label class="form-label">Password</label>
+                          
                         </div>
                         
 

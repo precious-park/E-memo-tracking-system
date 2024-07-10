@@ -102,7 +102,7 @@
 
                   <div class="pt-1 mb-4">
                     <div class="col-4">
-                      <button type="submit" class="btn btn-primary">Add</button>
+                      <button type="submit" class="btn btn-warning">Add</button>
                     </div>
                   </div>
                   </form>

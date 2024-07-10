@@ -1,5 +1,5 @@
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar  elevation-4 .custom-switch-on-">
     <!-- Brand Logo -->
     <a href="" class="brand-link">
       <img src="images/coa.jpg" class="brand-image img-circle elevation-3" style="opacity: .8">

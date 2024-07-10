@@ -3,18 +3,18 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {    
     
     $name = $_POST["name"]; 
-    
+    $email = $_POST["email"];          
+    $pwd = $_POST["password"];
 
     include('includes/dbh.php');
     
-    $sql = "INSERT INTO departments (dept_name)
-            VALUES ( '$name')";
+    $sql = "INSERT INTO admin (username, email, password)
+            VALUES ( '$name', '$email','$pwd')";
 
     if ($conn->query($sql) === TRUE) {        
        
        
-        echo "New record created successfully";
-        header("location:dashboard.php");
+        header("Location: admin/dashboard.php");
         exit();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $conn->close();
 } else {   
-    
+    header("location:register.php");
 }
 
 
