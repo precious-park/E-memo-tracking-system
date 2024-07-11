@@ -2,16 +2,17 @@
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {    
     
-    $name = $_POST["name"]; 
-    $email = $_POST["email"];
-    $type = $_POST["type"];          
+    $fname = $_POST["fname"]; 
+    $lname = $_POST["lname"];
+    $email = $_POST["email"];              
     $pwd = $_POST["password"];
-    $dname = $_POST["dname"];
+    $role = $_POST["role"];
+    $department = $_POST["department"];
 
     include('includes/dbh.php');
     
-    $sql = "INSERT INTO users (username, email, access_type,password,dept_name)
-            VALUES ( '$name', '$email','$type','$pwd','$dname')";
+    $sql = "INSERT INTO users (first_name,last_name, email,password,roles,dept_id)
+            VALUES ( '$fname','$lname','$email','$pwd','$role', '$department')";
 
     if ($conn->query($sql) === TRUE) {        
        

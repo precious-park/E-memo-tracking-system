@@ -1,3 +1,16 @@
+<?php
+include('includes/dbh.php');
+// Check connectio
+
+$sql = "SELECT dept_id, dept_name FROM departments";
+$result = $conn->query($sql);
+
+
+$conn->close();
+?>
+
+
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -87,66 +100,82 @@
           </div><!-- /.row -->
         </div><!-- /.container-fluid -->
         <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="card">
-            <h3 class="card-title">Add User</h3>
-              <div class="card-body">
-                
-                <div class="card-header">
-                  <form action="user-pro.php" method="post">
-                  <div data-mdb-input-init class="form-outline mb-1">
-                  <label class="form-label">Username</label>
-                    <input type="name" name="name" id="form2Example17" class="form-control form-control-lg" required />
-                    
-                  </div>
-                  <div data-mdb-input-init class="form-outline mb-1">
-                  <label class="form-label">Email</label>
-                          <input type="email" name="email" id="form2Example17" class="form-control form-control-lg" required />
-                          
-                        </div>
-                        <div data-mdb-input-init class="form-outline mb-1">
-                        <label class="form-label" for="form2Example17">Access Type</label>
-                          <select id="at" name="type" class="form-control form-control-lg">
-                          <option value="type">p/s</option>
-                          <option value="type">d/s</option>                          
-                          </select>
-                          
-                          
-                        </div>
-                        <div data-mdb-input-init class="form-outline mb-1">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="card">
+                <h3 class="card-title">Add User</h3>
+                <div class="card-body">
+
+                  <div class="card-header">
+                    <form action="user-pro.php" method="post">
+                      <div data-mdb-input-init class="form-outline mb-1">
+                        <label class="form-label">First name</label>
+                        <input type="fname" name="fname" id="form2Example17" class="form-control form-control-lg" required />
+
+                      </div>
+                      <div data-mdb-input-init class="form-outline mb-1">
+                        <label class="form-label">Last name</label>
+                        <input type="lname" name="lname" id="form2Example17" class="form-control form-control-lg" required />
+
+                      </div>
+                      <div data-mdb-input-init class="form-outline mb-1">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" id="form2Example17" class="form-control form-control-lg" required />
+
+                      </div>
+                      <div data-mdb-input-init class="form-outline mb-1">
                         <label class="form-label">Password</label>
-                          <input type="password" name="password" id="form2Example17" class="form-control form-control-lg" required />
-                          
-                        </div>
-                      
-                        <div data-mdb-input-init class="form-outline mb-1">
-                        <label class="form-label">Department</label>
-                          <input type="name" name="dname" id="form2Example17" class="form-control form-control-lg" required />
-                          
-                        </div>
+                        <input type="password" name="password" id="form2Example17" class="form-control form-control-lg" required />
 
-                  <div class="pt-1 mb-4">
-                    <div class="col-4">
-                      <button type="submit" class="btn btn-warning">Add</button>
-                    </div>
+                      </div>
+                      <div data-mdb-input-init class="form-outline mb-1">
+                        <label class="form-label" for="form2Example17">Role</label>
+                        <select id="role" name="role" class="form-control form-control-lg">
+                          <option value="Admin">Admin</option>
+                          <option value="User">User</option>
+                        </select>
+                      </div>
+                      <div data-mdb-input-init class="form-outline mb-1">
+                        <label class="form-label" for="form2Example17">Department</label>
+                        <select id="department" name="department" class="form-control form-control-lg">
+                          <?php
+                          if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                              echo "<option value='" . $row["dept_id"] . "'>" . $row["dept_name"] . "</option>";
+                            }
+                          } else {
+                            echo "<option value=''>No departments available</option>";
+                          }
+                          ?>
+                        </select>
+
+
+                      </div>
+
+
+
+
+                      <div class="pt-1 mb-4">
+                        <div class="col-4">
+                          <button type="submit" class="btn btn-warning">Add</button>
+                        </div>
+                      </div>
+                    </form>
+
                   </div>
-                  </form>
-                  
                 </div>
+
               </div>
-
             </div>
-          </div>
 
-        </div>
+          </div>
         </div><!-- /.container-fluid -->
       </div>
       <!-- /.content-header -->
       <!-- Content Wrapper. Contains page content -->
     </div>
 
-    
+
 
 
 
@@ -172,9 +201,9 @@
       <strong>Copyright &copy; EMTS</strong> All rights reserved.
     </footer>
   </div>
-  <!-- ./wrapper -->  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>  
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script> 
+  <!-- ./wrapper -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
   <script src="plugins/jquery/jquery.min.js"></script>

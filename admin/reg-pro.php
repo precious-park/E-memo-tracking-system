@@ -2,19 +2,21 @@
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {    
     
-    $name = $_POST["name"]; 
+    $fname = $_POST["fname"];
+    $lname = $_POST["lname"];  
     $email = $_POST["email"];          
     $pwd = $_POST["password"];
+    $role = $_POST["role"]; 
 
     include('includes/dbh.php');
     
-    $sql = "INSERT INTO admin (username, email, password)
-            VALUES ( '$name', '$email','$pwd')";
+    $sql = "INSERT INTO users (first_name,last_name, email, password,role)
+            VALUES ( '$fname','$lname', '$email','$pwd','$role')";
 
     if ($conn->query($sql) === TRUE) {        
        
        
-        header("Location: admin/dashboard.php");
+        header("Location:dashboard.php");
         exit();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
