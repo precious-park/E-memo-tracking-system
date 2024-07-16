@@ -1,4 +1,6 @@
 <?php
+include('includes/dbh.php');
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {    
     
@@ -8,13 +10,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pwd = $_POST["password"];
     $role = $_POST["role"]; 
 
-    include('includes/dbh.php');
     
-    $sql = "INSERT INTO users (first_name,last_name, email, password,role)
+    
+    $sql = "INSERT INTO users (first_name,last_name, email, password,roles)
             VALUES ( '$fname','$lname', '$email','$pwd','$role')";
 
     if ($conn->query($sql) === TRUE) {        
-       
+        $_SESSION['userID'] = $conn->insert_id;
+        $_SESSION['userID'] = $user['userID'];
+        $_SESSION['lname'] = $user['lname'];
+        $_SESSION['role'] = $user['role'];
        
         header("Location:dashboard.php");
         exit();

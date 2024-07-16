@@ -1,3 +1,9 @@
+<?php 
+session_start();
+// $user_id = $_SESSION['user_id'];
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,15 +22,19 @@
   <div class="card">
     <div class="card-body login-card-body" style="background-color: #005592" style="padding-block: 5rem">
 
-      <section class="vh-100" style="background-color: #005592">
-        <div class="container py-5 h-100">
-          <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col col-xl-10">
+      <section style="background-color: #005592">
+        <div class="container-fluid">
+          <div class=" d-flex justify-content-center align-items-center">
+            <div class="mw-100">
               <div class="card" style="border-radius: 1rem">
-                <div class="row g-0">
-                  <div class="col-md-6 col-lg-5 d-none d-md-block">
-                    <img src="images/coa3.png" alt="login form" class="img-fluid" />
-                  </div>
+                <div class="d-flex  justify-content-center align-items-center">
+                  <img src="images/coa2.png" alt="coa" width="100" height="100" />
+                </div>
+                <div class="d-flex  justify-content-center align-items-center">
+                  <small class="text-black">Ministry Of ICT & National Guidance</small>
+                </div>
+                <div class="g-0">
+
                   <div class="col-md-6 col-lg-7 d-flex align-items-center">
 
                     <div class="card-body p-4 p-lg-5 text-black">
@@ -37,21 +47,21 @@
                         <span class="h4 fw mb-0 d-flex align-items-center mb-3 pb-1">Secretary Registration</span>
 
                         <div data-mdb-input-init class="form-outline mb-1">
-                        <label class="form-label">Username</label>
-                          <input type="name" name="name" id="form2Example17" class="form-control form-control-lg" required />
-                          
-                        </div>                       
-                        
-                        <div data-mdb-input-init class="form-outline mb-1">
-                        <label class="form-label">Password</label>
-                          <input type="password" name="password" id="form2Example27" class="form-control form-control-lg" required />
-                          
+                          <label class="form-label">Email</label>
+                          <input type="email" name="email" id="form2Example17" class="form-control form-control-lg" required />
+
                         </div>
-                        
+
+                        <div data-mdb-input-init class="form-outline mb-1">
+                          <label class="form-label">Password</label>
+                          <input type="password" name="password" id="form2Example27" class="form-control form-control-lg" required />
+
+                        </div>
+
 
                         <div class="pt-1 mb-4">
-                          <div class="col-4">
-                            <button type="submit" class="btn btn-dark  btn-block">Login</button>
+                          <div class="col-7">
+                            <button type="submit" class="btn btn-warning  btn-block">Login</button>
                           </div>
                         </div>
 
@@ -66,10 +76,10 @@
       </section>
     </div>
   </div>
-  
-  
-  <script src="plugins/jquery/jquery.min.js"></script>  
-  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>  
+
+
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
 </body>
 

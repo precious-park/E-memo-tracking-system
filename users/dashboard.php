@@ -1,3 +1,36 @@
+<?php
+include('includes/dbh.php');
+session_start();
+// if (!isset($_SESSION['userID'])) {
+//   header('Location: login.php');  // Redirect to login page if not authenticated
+//   exit;
+// }
+
+// $userID = $_SESSION['userID'];
+
+
+// // Query the database to get user data
+// $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
+// $stmt->bind_param("i", $userID);
+// $stmt->execute();
+// $result = $stmt->get_result();
+
+// if ($result->num_rows == 1) {
+//     // User found
+//     $user = $result->fetch_assoc();
+
+    
+// } else {
+//     echo "User not found.";
+// }
+
+// $stmt->close();
+// $conn->close();
+
+
+
+
+?>
 <!DOCTYPE html>
 
 <html lang="en">

@@ -1,33 +1,59 @@
 <?php
 session_start();
 
-// Include database connection
-include('includes/dbh.php'); // Adjust the path if necessary
+include('includes/dbh.php');
+// Query the database to get user data
+$stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
+$stmt->bind_param("i", $userID);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows == 0) {
+    // User found
+    $user = $result->fetch_assoc();
+
+    
+} else {
+    // echo "User not found.";
+}
+ 
+
+
 
 // Check if form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST['name'];
-    $pwd= $_POST['password'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Get input values
+    $email = $_POST['email'];
+    $pwd = $_POST['password'];
 
-    // Prevent SQL Injection
-    $username = stripslashes($name);
-    $password = stripslashes($pwd);
-    $username = mysqli_real_escape_string($conn, $name);
-    $password = mysqli_real_escape_string($conn, $pwd);
+    // Prepare SQL query
+    $stmt = $conn->prepare("SELECT user_id, email, password FROM users WHERE email = ? AND password = ?");
+    // $stmt = $conn->prepare("SELECT roles FROM users WHERE email = ? AND password = ?");
+    // Check if prepare() failed
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
 
-    // Query to check if the username and password match
-    $sql = "SELECT id, password FROM users WHERE username='$name' AND password='$pwd'";
-    $result = $conn->query($sql);
+    // Bind parameters and execute query
+    $stmt->bind_param("ss", $email, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        // Login successful
-        $row = $result->fetch_assoc();
-        $_SESSION['name'] = $name;
-        $_SESSION['userid'] = $row['id'];
-        echo "Login successful! Welcome, " . $_SESSION['username'];
-        header("location:dashboard.php");
-} else {  echo "Error: " . $sql . "<br>" . $conn->error;
+    if ($result->num_rows == 0) {
+        // User found
+        $user = $result->fetch_assoc();
+
+        // Set session variables
+        $_SESSION['userID'] = $user['userID'];
+        $_SESSION['email'] = $user['email'];
+        $_SESSION['roles'] = $user['roles'];
+
+        // Redirect based on role
+       
+            header('Location: dashboard.php');       
+        
+    } 
+
+    $stmt->close();
+    $conn->close();
 }
-
-$conn->close();
-} 

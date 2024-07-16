@@ -1,3 +1,11 @@
+<?php
+include('includes/dbh.php');
+session_start();
+
+
+
+?>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -79,6 +87,12 @@
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
+              
+                
+                <!-- <p><strong>Name:</strong> <?= htmlspecialchars($user['first_name']); ?></p>
+                <p><strong>Email:</strong> <?= htmlspecialchars($user['email']); ?></p>
+                <p><strong>Department ID:</strong> <?= htmlspecialchars($user['dept_id']); ?></p>
+               -->
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item active">View Memo</li>
               </ol>
