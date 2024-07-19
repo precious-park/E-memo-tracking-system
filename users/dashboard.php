@@ -1,6 +1,12 @@
 <?php
 include('includes/dbh.php');
 session_start();
+$sql = "SELECT dept_id, dept_name FROM departments";
+$result = $conn->query($sql);
+
+
+$conn->close();
+
 // if (!isset($_SESSION['userID'])) {
 //   header('Location: login.php');  // Redirect to login page if not authenticated
 //   exit;
@@ -19,17 +25,13 @@ session_start();
 //     // User found
 //     $user = $result->fetch_assoc();
 
-    
+
 // } else {
 //     echo "User not found.";
 // }
 
 // $stmt->close();
 // $conn->close();
-
-
-
-
 ?>
 <!DOCTYPE html>
 
@@ -39,6 +41,10 @@ session_start();
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ministry of ICT & National Guidance E-Memo Tracking System</title>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+  <link rel="stylesheet" type="text/css" href="plugins/datatables/jquery.dataTables.js">
+  <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="../admin/dist/css/adminlte.min.css">
@@ -50,10 +56,69 @@ session_start();
 
 
     <?php
-    include('includes/header.php');
-    include('includes/sidebar.php');
+    include('includes/header.php');    
     ?>
 
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="" class="brand-link">
+      <img src="images/coa.jpg" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">EMTS</span>
+      
+    </a>
+    <div class="brand-link">
+    <span class="brand-text font-weight-light">MINISTRY OF ICT & <br>
+         NATIONAL GUIDANCE</span>
+    </div>
+    
+
+    <!-- Sidebar -->
+    <div class="sidebar">       
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          
+          <li class="nav-item">
+            <a href="view.php" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                View Memos
+                
+              </p>
+            </a>
+            
+          </li>
+          <li class="nav-item menu">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-book"></i>
+              <p>
+                Register Memo
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="income.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Incoming</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="outgoing.php" class="nav-link ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Outgoing</p>
+                </a>
+              </li>
+            </ul>
+          </li>          
+          
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
@@ -76,128 +141,14 @@ session_start();
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Main content -->
-        <section class="content">
-          <div class="container-fluid">
-            <h4 class="text-center ">Search Filter</h4>
-            <form action="enhanced-results.html">
-              <div class="row card">
-                <div class="col-md-10 offset-md-1">
-                  <div class="row">
-                    <div class="col-3">
-                      <div class="form-group">
-                        <label>Date</label>
-                        <input type="date" name="" id="">
-                      </div>
-                    </div>
-                    <div class="col-3">
-                      <div class="form-group">
-                        <label>Department</label>
-                        <select class="select2" style="width: 100%;">
-                          <option>E-services</option>
-                          <option>Audit</option>
-                          <option>Procurement</option>
-                          <option>P/S</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-3">
-                      <div class="form-group">
-                        <label>Author</label>
-                        <select class="select2" style="width: 100%;">
-                          <option>Precious</option>
-                          <option>Maria</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class=" d-flex flex-row">
-                    <div class="d-flex flex-row mb-4">
-                      <div class="col-4">
-                        <button type="submit" class="btn btn-warning ">Filter</button>
-                      </div>
-                    </div>
-                    <div class="d-flex flex-row mb-4">
-                      <div class="col-4">
-                        <button type="submit" class="btn btn-warning ">Reset</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </form>
-          </div>
-        </section>
+        
       </div>
 
 
       <!-- /.content-wrapper -->
       <!-- table to view the memos -->
       <!-- Main content -->
-      <section class="content">
-        <div class="container-fluid">
-
-          <!-- /.row -->
-          <div class="row">
-            <div class="col-12">
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">View Memos</h3>
-
-                  <div class="card-tools">
-                    <div class="input-group input-group-sm" style="width: 150px;">
-                      <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                      <div class="input-group-append">
-                        <button type="submit" class="btn btn-default">
-                          <i class="fas fa-search"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body table-responsive p-0">
-                  <table class="table table-hover text-nowrap">
-                    <thead>
-                      <tr>
-                        <th>MEMO ID</th>
-                        <th>SUBJECT</th>
-                        <th>DATE</th>
-                        <th>STATUS</th>
-                        <th>DEPT.</th>
-                        <th>FROM</th>
-                        <th>TO</th>
-                        <th>ACTION</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                       
-                      </tr>
-                      <tr>
-                        
-                      </tr>
-                      <tr>
-                        
-                      </tr>
-                      <tr>
-                        
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-            </div>
-          </div>
-
-
-        </div>
-        <!-- /.row -->
-    </div><!-- /.container-fluid -->
-    </section>
+      
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
@@ -210,15 +161,16 @@ session_start();
     <!-- /.control-sidebar -->
 
     <!-- Main Footer -->
-    <footer class="main-footer">
+    
+  </div>
+  <footer class="main-footer">
       <!-- To the right -->
       <div class="float-right d-none d-sm-inline">
         MINISTRY OF ICT & NATIONAL GUIDANCE
       </div>
       <!-- Default to the left -->
-      <strong>Copyright &copy; EMTS</strong> All rights reserved.
+      <strong>Copyright &copy; <?php echo date('Y'); ?> EMTS</strong> All rights reserved.
     </footer>
-  </div>
   <!-- ./wrapper -->
 
   <script src="plugins/jquery/jquery.min.js"></script>
@@ -231,6 +183,34 @@ session_start();
       $('.select2').select2()
     });
   </script>
+  <script>
+        $(document).ready(function() {
+            $('#memosTable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "table-pro.php", // Path to PHP script
+                    "type": "POST"
+                },
+                "columns": [{
+                        "data": "subject"
+                    },
+                    {
+                        "data": "Author"
+                    },
+                    {
+                        "data": "To_Department"
+                    },
+                    {
+                        "data": "Status"
+                    },
+                    {
+                        "data": "date_created"
+                    }
+                ]
+            });
+        });
+    </script>
 </body>
 
 </html>

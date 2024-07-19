@@ -1,5 +1,6 @@
 <?php
 include('includes/dbh.php');
+include('user-pro.php');
 // Check connectio
 
 $sql = "SELECT dept_id, dept_name FROM departments";
@@ -104,6 +105,9 @@ $conn->close();
             <div class="col-lg-6">
               <div class="card">
                 <h3 class="card-title">Add User</h3>
+                <?php echo $success_msg; ?>
+                    <?php echo $email_exist; ?>
+                    
                 <div class="card-body">
 
                   <div class="card-header">
@@ -111,21 +115,29 @@ $conn->close();
                       <div data-mdb-input-init class="form-outline mb-1">
                         <label class="form-label">First name</label>
                         <input type="fname" name="fname" id="form2Example17" class="form-control form-control-lg" required />
+                        <?php echo $fNameEmptyErr; ?>
+                        <?php echo $f_NameErr; ?>
 
                       </div>
                       <div data-mdb-input-init class="form-outline mb-1">
                         <label class="form-label">Last name</label>
                         <input type="lname" name="lname" id="form2Example17" class="form-control form-control-lg" required />
+                        <?php echo $l_NameErr; ?>
+                        <?php echo $lNameEmptyErr; ?>
 
                       </div>
                       <div data-mdb-input-init class="form-outline mb-1">
                         <label class="form-label">Email</label>
                         <input type="email" name="email" id="form2Example17" class="form-control form-control-lg" required />
+                        <?php echo $_emailErr; ?>
+                        <?php echo $emailEmptyErr; ?>
 
                       </div>
                       <div data-mdb-input-init class="form-outline mb-1">
                         <label class="form-label">Password</label>
                         <input type="password" name="password" id="form2Example17" class="form-control form-control-lg" required />
+                        <?php echo $_passwordErr; ?>
+                        <?php echo $passwordEmptyErr; ?>
 
                       </div>
                       <div data-mdb-input-init class="form-outline mb-1">
@@ -134,6 +146,8 @@ $conn->close();
                           <option value="Admin">Admin</option>
                           <option value="User">User</option>
                         </select>
+                        <?php echo $_roleErr; ?>
+                        <?php echo $roleEmptyErr; ?>
                       </div>
                       <div data-mdb-input-init class="form-outline mb-1">
                         <label class="form-label" for="form2Example17">Department</label>
@@ -148,6 +162,8 @@ $conn->close();
                           }
                           ?>
                         </select>
+                        <?php echo $_departmentErr; ?>
+                        <?php echo $departmentEmptyErr; ?>
 
 
                       </div>
