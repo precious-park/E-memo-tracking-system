@@ -33,7 +33,7 @@ if (!empty($params['search']['value'])) {
 }
 
 // Base SQL query
-$sql = "SELECT * FROM `memos` WHERE Status = 'Pending' AND dept_id = $_SESSION(['user']['dept_id])";
+$sql = "SELECT * FROM `memos`";
 
 // Total records query
 $sqlTot .= $sql;

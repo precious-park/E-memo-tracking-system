@@ -5,33 +5,11 @@ $sql = "SELECT dept_id, dept_name FROM departments";
 $result = $conn->query($sql);
 
 
-$conn->close();
+if (!isset($_SESSION['user'])) {
+  header('Location: login.php');  // Redirect to login page if not authenticated
+  exit;
+}
 
-// if (!isset($_SESSION['userID'])) {
-//   header('Location: login.php');  // Redirect to login page if not authenticated
-//   exit;
-// }
-
-// $userID = $_SESSION['userID'];
-
-
-// // Query the database to get user data
-// $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
-// $stmt->bind_param("i", $userID);
-// $stmt->execute();
-// $result = $stmt->get_result();
-
-// if ($result->num_rows == 1) {
-//     // User found
-//     $user = $result->fetch_assoc();
-
-
-// } else {
-//     echo "User not found.";
-// }
-
-// $stmt->close();
-// $conn->close();
 ?>
 <!DOCTYPE html>
 
@@ -111,7 +89,27 @@ $conn->close();
                 </a>
               </li>
             </ul>
-          </li>          
+          </li> 
+          <li class="nav-item">
+              <a href="memos.php" class="nav-link active">
+              <i class="nav-icon fas fa-table"></i>
+                <p>
+                  Send Memos
+
+                </p>
+              </a>
+
+            </li>
+          <li class="nav-item">
+              <a href="logout.php" class="nav-link">
+                <i class="left fas fa-angle-left"></i>
+                <p>
+                  Log Out
+
+                </p>
+              </a>
+
+            </li>         
           
         </ul>
       </nav>
@@ -126,7 +124,10 @@ $conn->close();
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="text-light m-0">User Dashboard</h1>
+              <!-- <h1 class="text-light m-0">User Dashboard</h1> -->
+              <h1 class="text-light m-0">Welcome, Secretary <?php echo $_SESSION['user']['first_name'];
+                                                            ?> <?php
+                                                                echo $_SESSION['user']['dept_id']; ?></h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">

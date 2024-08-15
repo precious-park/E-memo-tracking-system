@@ -1,8 +1,7 @@
 <?php
+
 session_start(); 
-
 include('includes/dbh.php');
-
 
 // Check if form is submitted
 if (isset($_POST['login'])) {
@@ -10,37 +9,42 @@ if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $pwd = $_POST['password'];
 
-    if(!empty($email) && !empty($pwd)){       
-    
-
-    // Prepare SQL query
-    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? AND password = ? AND roles = 'user'");
-    // $stmt = $conn->prepare("SELECT roles FROM users WHERE email = ? AND password = ?");
-    // $query = mysqli_query($connection, $sql);
-    // Check if prepare() failed
-    if (!$stmt) {
-        die("Prepare failed: " . $conn->error);
-    }
-
-    // Bind parameters and execute query
-    $stmt->bind_param("ss", $email, $pwd);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows == 1) {
-        // User found
-        $user = $result->fetch_assoc(); 
-        // Set session variables
-        $_SESSION['user'] = $user;
+    if(!empty($email) && !empty($pwd)){
+        // Prepare SQL query
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? AND password = ? AND roles = 'user'");
         
-        header('location:dashboard.php');       
-        
-    } 
+        // Check if prepare() failed
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
 
-    $stmt->close();
-    $conn->close();
+        // Bind parameters and execute query
+        $stmt->bind_param("ss", $email, $pwd);
+        if ($stmt->execute()) {
+            // Get result set from the prepared statement
+            $result = $stmt->get_result();
+
+            if ($result->num_rows == 1) {
+                // User found, fetch user data and set session variables
+                $user = $result->fetch_assoc(); 
+                $_SESSION['user'] = $user;
+                header('location:dashboard.php');
+                exit();
+            } else {
+                echo "Invalid email or password";
+            }
+            
+       } else {
+           echo "Error executing the query: " . $conn->error;
+       }
+
+       // Close statement and database connection 
+       $stmt->close();
+       mysqli_close($conn);
+
+   } else {
+      echo "Email and password fields are required";
+   }
 }
 
-
    
-}  
