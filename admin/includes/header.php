@@ -1,10 +1,6 @@
 <?php
 include('includes/dbh.php');
 
-
-
-
-
 $conn->close();
 ?>
   <!-- Navbar -->
@@ -15,7 +11,7 @@ $conn->close();
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
+        <a href="dashboard.php" class="nav-link">Home</a>
       </li>
       
     </ul>
@@ -74,7 +70,7 @@ $conn->close();
       <li class="nav-item">      
         <div class=" user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block"><?php ?> </a>

@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="plugins/datatables/jquery.dataTables.js">
+    <link rel="stylesheet" type="text/css" href="../plugins/datatables/jquery.dataTables.js">
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
     <title>Ministry of ICT & National Guidance E-Memo Tracking System</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="../admin/dist/css/adminlte.min.css">
-    <link rel="stylesheet" href="plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini">

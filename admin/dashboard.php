@@ -1,9 +1,11 @@
 <?php
-include('includes/dbh.php');
 session_start();
+include('includes/dbh.php');
 
-
-
+if (!isset($_SESSION['user'])) {
+  header('Location: login.php');  // Redirect to login page if not authenticated
+  exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -27,55 +29,9 @@ session_start();
 
     <?php
     include('includes/header.php');
-    // include('includes/sidebar.php');
+    include('includes/sidebar.php');
     ?>
-    <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-bg elevation-4 ">
-      <!-- Brand Logo -->
-      <a href="" class="brand-link">
-        <img src="images/coa.jpg" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="text-light font-weight-light">EMTS</span>
-
-      </a>
-      <div class="brand-link">
-        <span class="brand-text font-weight-light">MINISTRY OF ICT & <br>
-          NATIONAL GUIDANCE</span>
-      </div>
-
-
-      <!-- Sidebar -->
-      <div class="sidebar">
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
-
-
-            <li class="nav-item">
-              <a href="add-user.php" class="nav-link">
-                <i class="nav-icon fas fa-user"></i>
-                <p>
-                  Add User
-                  <span class="right badge badge"></span>
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="add-dept.php" class="nav-link">
-                <i class="nav-icon fas fa-th"></i>
-                <p>
-                   Add Department
-                  <span class="right badge badge"></span>
-                </p>
-              </a>
-            </li>
-          </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
-      </div>
-      <!-- /.sidebar -->
-    </aside>
-
+    
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
@@ -83,18 +39,17 @@ session_start();
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Admin Dashboard</h1>
+            <h1 class="text-light m-0">Welcome, Secretary <?php echo $_SESSION['user']['email'];
+                                                var_dump($_SESSION['user']['email'])            ?> </h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
               
                 
-                <!-- <p><strong>Name:</strong> <?= htmlspecialchars($user['first_name']); ?></p>
-                <p><strong>Email:</strong> <?= htmlspecialchars($user['email']); ?></p>
-                <p><strong>Department ID:</strong> <?= htmlspecialchars($user['dept_id']); ?></p>
-               -->
+                
+               
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">View Memo</li>
+                <li class="breadcrumb-item active">Dashboard</li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->

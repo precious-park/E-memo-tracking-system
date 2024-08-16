@@ -4,7 +4,7 @@ include 'layout/header.php';
 // var_dump($_SESSION['user']);
 ?>
 <?php
-include('includes/header.php');
+// include('includes/header.php');
 include('includes/sidebar.php');
 ?>
 <div class="content-wrapper">

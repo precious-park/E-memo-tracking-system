@@ -20,15 +20,38 @@
           
           <li class="nav-item">
             <a href="dashboard.php" class="nav-link">
-              <i class="nav-icon fas fa-table"></i>
+              <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                View Memos
+                Dashboard
                 
               </p>
             </a>
             
           </li>
-          <li class="nav-item menu-open">
+          <li class="nav-item menu">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-book"></i>
+              <p>
+                View Memo
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="incoming.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Incoming</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="view-outgoing.php" class="nav-link ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Outgoing</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item menu">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-book"></i>
               <p>
@@ -37,12 +60,7 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="income.php" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Incoming</p>
-                </a>
-              </li>
+              
               <li class="nav-item">
                 <a href="outgoing.php" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
@@ -50,7 +68,27 @@
                 </a>
               </li>
             </ul>
-          </li>          
+          </li>  
+          <li class="nav-item">
+            <a href="audit.php" class="nav-link">
+              <i class="nav-icon fas fa-angle-left"></i>
+              <p>
+                Audit Trail
+                
+              </p>
+            </a>
+            
+          </li> 
+          <li class="nav-item">
+            <a href="logout.php" class="nav-link">
+              <i class="nav-icon fas fa-angle-left"></i>
+              <p>
+                Log Out
+                
+              </p>
+            </a>
+            
+          </li>        
           
         </ul>
       </nav>

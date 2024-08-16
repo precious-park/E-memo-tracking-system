@@ -12,9 +12,9 @@ session_start();
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ministry of ICT & National Guidance E-Memo Tracking System</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
-  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css" />
-  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
-  <link rel="stylesheet" href="dist/css/adminlte.min.css" />
+  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css" />
+  <link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
+  <link rel="stylesheet" href="../dist/css/adminlte.min.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -39,7 +39,7 @@ session_start();
 
                     <div class="card-body p-4 p-lg-5 text-black">
 
-                      <form action="login-pro.php" method="POST" novalidate>
+                      <form action="login-pro.php" method="POST">
                         <div class="d-flex align-items-center mb-3 pb-1">
                           <i class="fas fa-cubes fa-2x me-3" style="color: #005592"></i>
                           <span class="h1 fw-bold mb-0">EMTS</span>
@@ -78,9 +78,9 @@ session_start();
   </div>
 
 
-  <script src="plugins/jquery/jquery.min.js"></script>
-  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="dist/js/adminlte.min.js"></script>
+  <script src="../plugins/jquery/jquery.min.js"></script>
+  <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../dist/js/adminlte.min.js"></script>
 </body>
 
 </html>

@@ -3,9 +3,6 @@ session_start();
 
 include('includes/dbh.php');
 
-
-
-
 // Check if form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Get input values
@@ -28,13 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($result->num_rows == 0) {
         // User found
         $user = $result->fetch_assoc();
+        $_SESSION['user'] = $user;
 
-        // Set session variables
-        $_SESSION['userID'] = $user['userID'];
-        $_SESSION['email'] = $user['email'];
-        $_SESSION['roles'] = $user['roles'];
-
-        // Redirect based on role
+        // $_SESSION['user'] = [
+        //     'user_id' => $user['id'],
+        //     'email' => $user['email'],
+        //     'first_name' => $user['name']
+        // ];   
        
             header('Location: dashboard.php');       
         

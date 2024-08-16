@@ -34,54 +34,9 @@ $conn->close();
 
     <?php
     include('includes/header.php');
-    // include('includes/sidebar.php');
+    include('includes/sidebar.php');
+    // 
     ?>
-    <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-      <!-- Brand Logo -->
-      <a href="" class="brand-link">
-        <img src="images/coa.jpg" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">EMTS</span>
-
-      </a>
-      <div class="brand-link">
-        <span class="brand-text font-weight-light">MINISTRY OF ICT & <br>
-          NATIONAL GUIDANCE</span>
-      </div>
-
-
-      <!-- Sidebar -->
-      <div class="sidebar">
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
-
-
-            <li class="nav-item">
-              <a href="add-user.php" class="nav-link">
-                <i class="nav-icon fas fa-user"></i>
-                <p>
-                  Add User
-                  <span class="right badge badge"></span>
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="add-dept.php" class="nav-link">
-                <i class="nav-icon fas fa-th"></i>
-                <p>
-                  Departments
-                  <span class="right badge badge"></span>
-                </p>
-              </a>
-            </li>
-          </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
-      </div>
-      <!-- /.sidebar -->
-    </aside>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -95,7 +50,7 @@ $conn->close();
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">View Memo</li>
+                <li class="breadcrumb-item active">Add User</li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->
@@ -105,9 +60,7 @@ $conn->close();
             <div class="col-lg-6">
               <div class="card">
                 <h3 class="card-title">Add User</h3>
-                <?php echo $success_msg; ?>
-                    <?php echo $email_exist; ?>
-                    
+
                 <div class="card-body">
 
                   <div class="card-header">
@@ -115,29 +68,24 @@ $conn->close();
                       <div data-mdb-input-init class="form-outline mb-1">
                         <label class="form-label">First name</label>
                         <input type="fname" name="fname" id="form2Example17" class="form-control form-control-lg" required />
-                        <?php echo $fNameEmptyErr; ?>
-                        <?php echo $f_NameErr; ?>
+
 
                       </div>
                       <div data-mdb-input-init class="form-outline mb-1">
                         <label class="form-label">Last name</label>
                         <input type="lname" name="lname" id="form2Example17" class="form-control form-control-lg" required />
-                        <?php echo $l_NameErr; ?>
-                        <?php echo $lNameEmptyErr; ?>
+
 
                       </div>
                       <div data-mdb-input-init class="form-outline mb-1">
                         <label class="form-label">Email</label>
                         <input type="email" name="email" id="form2Example17" class="form-control form-control-lg" required />
-                        <?php echo $_emailErr; ?>
-                        <?php echo $emailEmptyErr; ?>
 
                       </div>
                       <div data-mdb-input-init class="form-outline mb-1">
                         <label class="form-label">Password</label>
                         <input type="password" name="password" id="form2Example17" class="form-control form-control-lg" required />
-                        <?php echo $_passwordErr; ?>
-                        <?php echo $passwordEmptyErr; ?>
+
 
                       </div>
                       <div data-mdb-input-init class="form-outline mb-1">
@@ -146,8 +94,7 @@ $conn->close();
                           <option value="Admin">Admin</option>
                           <option value="User">User</option>
                         </select>
-                        <?php echo $_roleErr; ?>
-                        <?php echo $roleEmptyErr; ?>
+
                       </div>
                       <div data-mdb-input-init class="form-outline mb-1">
                         <label class="form-label" for="form2Example17">Department</label>
@@ -162,14 +109,7 @@ $conn->close();
                           }
                           ?>
                         </select>
-                        <?php echo $_departmentErr; ?>
-                        <?php echo $departmentEmptyErr; ?>
-
-
                       </div>
-
-
-
 
                       <div class="pt-1 mb-4">
                         <div class="col-4">
@@ -190,12 +130,6 @@ $conn->close();
       <!-- /.content-header -->
       <!-- Content Wrapper. Contains page content -->
     </div>
-
-
-
-
-
-
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
@@ -222,10 +156,10 @@ $conn->close();
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-  <script src="plugins/jquery/jquery.min.js"></script>
-  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="dist/js/adminlte.min.js"></script>
-  <script src="plugins/select2/js/select2.full.min.js"></script>
+  <script src="../plugins/jquery/jquery.min.js"></script>
+  <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../dist/js/adminlte.min.js"></script>
+  <script src="../plugins/select2/js/select2.full.min.js"></script>
   <script>
     $(function() {
       $('.select2').select2()
