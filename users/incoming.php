@@ -112,6 +112,4 @@ include('includes/sidebar.php');
     });
   }
 </script>
-
-
 <?php include 'layout/footer.php'; ?>

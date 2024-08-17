@@ -1,3 +1,32 @@
+<?php 
+session_start();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {    
+    
+  $name = $_POST["name"]; 
+  
+
+  include('includes/dbh.php');
+  
+  $sql = "INSERT INTO departments (dept_name)
+          VALUES ( '$name')";
+
+  if ($conn->query($sql) === TRUE) {        
+     
+     
+      echo "New record created successfully";
+      header("location:dashboard.php");
+      exit();
+  } else {
+      echo "Error: " . $sql . "<br>" . $conn->error;
+  }
+
+  $conn->close();
+} else {   
+  
+}
+
+?>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -6,6 +35,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ministry of ICT & National Guidance E-Memo Tracking System</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
+  <link rel="manifest" href="../images/site.webmanifest">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
@@ -31,7 +64,9 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Admin Dashboard</h1>
+              
+              <h1 class="text-light m-0">Welcome, Admin <?php echo $_SESSION['user']['last_name']; ?>
+                                                </h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
@@ -49,7 +84,7 @@
               <div class="card-body">
                 <h3 class="card-title">Add Department</h3>
                 <div class="card-header">
-                  <form action="add-pro.php" method="post">
+                  <form action="add-dept.php" method="post">
                   <div data-mdb-input-init class="form-outline mb-1">
                     <input type="name" name="name" id="form2Example17" class="form-control form-control-lg" required />
                     <label class="form-label">Dept. name</label>

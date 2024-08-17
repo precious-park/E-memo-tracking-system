@@ -21,7 +21,7 @@ $columns = array(
     5 => 'date_created'
 );
 
-$where = $sqlTot = $sqlRec = "";
+$where = $stmtTot = $stmtRec = "";
 
 // Check search value exist
 if (!empty($params['search']['value'])) {   
@@ -34,28 +34,32 @@ if (!empty($params['search']['value'])) {
 }
 
 // Base SQL query
-// $sql = "SELECT * FROM `memos`";
-$sql = "SELECT * FROM memos WHERE Author IN (SELECT email FROM users WHERE dept_id = " . $dept_id . ")";
+// $stmt = "SELECT * FROM `memos`";
+// $stmt = "SELECT * FROM memos WHERE Author IN (SELECT email FROM users WHERE dept_id = " . $dept_id . ")";
+$stmt = $conn->prepare("SELECT * FROM memos WHERE Author IN (SELECT email FROM users WHERE dept_id = " . $dept_id . ")");
+$stmt->bind_param("i", $dept_id);
+$stmt->execute();
+$result = $stmt->get_result();
 
 // Total records query
-$sqlTot .= $sql;
-$sqlRec .= $sql;
+$stmtTot .= $stmt;
+$stmtRec .= $stmt;
 
 // Concatenate search SQL if value exists
 if (isset($where) && $where != '') {
-    $sqlTot .= $where;
-    $sqlRec .= $where;
+    $stmtTot .= $where;
+    $stmtRec .= $where;
 }
 
 // Add ordering and pagination
-$sqlRec .= " ORDER BY " . $columns[$params['order'][0]['column']] . " " . $params['order'][0]['dir'] . " LIMIT " . $params['start'] . " ," . $params['length'] . " ";
+$stmtRec .= " ORDER BY " . $columns[$params['order'][0]['column']] . " " . $params['order'][0]['dir'] . " LIMIT " . $params['start'] . " ," . $params['length'] . " ";
 
 // Execute total records query
-$queryTot = mysqli_query($conn, $sqlTot) or die("Database error: " . mysqli_error($conn));
+$queryTot = mysqli_query($conn, $stmtTot) or die("Database error: " . mysqli_error($conn));
 $totalRecords = mysqli_num_rows($queryTot);
 
 // Execute records query
-$queryRecords = mysqli_query($conn, $sqlRec) or die("Error fetching memos data");
+$queryRecords = mysqli_query($conn, $stmtRec) or die("Error fetching memos data");
 
 // Iterate through results and create new index array of data
 while ($row = mysqli_fetch_assoc($queryRecords)) { 

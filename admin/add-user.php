@@ -1,13 +1,39 @@
 <?php
+session_start();
 include('includes/dbh.php');
-include('user-pro.php');
-// Check connectio
 
 $sql = "SELECT dept_id, dept_name FROM departments";
 $result = $conn->query($sql);
 
 
-$conn->close();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $fname = $_POST["fname"];
+    $lname = $_POST["lname"];
+    $email = $_POST["email"];
+    $pwd = $_POST["password"];
+    $role = $_POST["role"];
+    $dept_id = $_POST["department"];
+
+    $sql = "INSERT INTO users (first_name, last_name, email, password, roles, dept_id)
+            VALUES ( '$fname','$lname', '$email','$pwd','$role','$dept_id')";
+
+    if ($conn->query($sql) === TRUE) {
+        
+
+        echo "<script>alert('Registration successful!');</script>";
+        // echo "<script>window.location.href='dashboard.php';</script>";
+        header("Location:dashboard.php");
+        exit();
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+    $conn->close();
+} 
+
+
 ?>
 
 
@@ -20,6 +46,10 @@ $conn->close();
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ministry of ICT & National Guidance E-Memo Tracking System</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
+  <link rel="manifest" href="../images/site.webmanifest">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
@@ -45,7 +75,9 @@ $conn->close();
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Admin Dashboard</h1>
+              
+              <h1 class="text-light m-0">Welcome, Admin <?php echo $_SESSION['user']['last_name']; ?>
+                                               </h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
@@ -64,7 +96,7 @@ $conn->close();
                 <div class="card-body">
 
                   <div class="card-header">
-                    <form action="user-pro.php" method="post">
+                    <form action="add-user.php" method="post">
                       <div data-mdb-input-init class="form-outline mb-1">
                         <label class="form-label">First name</label>
                         <input type="fname" name="fname" id="form2Example17" class="form-control form-control-lg" required />

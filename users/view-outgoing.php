@@ -4,7 +4,7 @@ include 'layout/header.php';
 // var_dump($_SESSION['user']);
 ?>
 <?php
-include('includes/header.php');
+// include('includes/header.php');
 include('includes/sidebar.php');
 ?>
 <div class="content-wrapper">
@@ -19,7 +19,7 @@ include('includes/sidebar.php');
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">View Incoming</li>
+            <li class="breadcrumb-item active">View Outgoing</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->

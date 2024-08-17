@@ -2,20 +2,26 @@
 include('includes/dbh.php');
 session_start();
 $sql = "SELECT dept_id, dept_name FROM departments";
-$result = $conn->query($sql); 
-  
+$result = $conn->query($sql);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="../plugins/datatables/jquery.dataTables.min.js"> 
+    <link rel="stylesheet" type="text/css" href="../plugins/datatables/jquery.dataTables.min.js">
     <title>Ministry of ICT & National Guidance E-Memo Tracking System</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+  <link rel="stylesheet" type="text/css" href="../plugins/datatables/jquery.dataTables.js">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="../admin/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
+    <link rel="manifest" href="../images/site.webmanifest">
 </head>
 
 <body class="hold-transition sidebar-mini">

@@ -1,6 +1,35 @@
 <?php 
 session_start();
 
+include('includes/dbh.php');
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = $_POST['email'];
+    $pwd = $_POST['password'];
+
+    if (empty($email) || empty($pwd)) {
+        echo "Email and password are required.";
+    } else {
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? AND roles = 'admin'");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows == 1) {
+            $user = $result->fetch_assoc();
+
+            $_SESSION['user'] = $user; 
+            header('location:dashboard.php');
+            exit();
+            }
+        else {
+            echo "Invalid credentials.";
+        }
+
+        $stmt->close();
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,6 +38,10 @@ session_start();
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ministry of ICT & National Guidance E-Memo Tracking System</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
+  <link rel="manifest" href="../images/site.webmanifest">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css" />
   <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
@@ -37,7 +70,7 @@ session_start();
 
                     <div class="card-body p-4 p-lg-5 text-black">
 
-                      <form action="login-pro.php" method="POST" novalidate>
+                      <form action="login.php" method="POST">
                         <div class="d-flex align-items-center mb-3 pb-1">
                           <i class="fas fa-cubes fa-2x me-3" style="color: #005592"></i>
                           <span class="h1 fw-bold mb-0">EMTS</span>

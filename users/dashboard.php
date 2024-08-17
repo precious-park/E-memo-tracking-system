@@ -5,10 +5,10 @@ $sql = "SELECT dept_id, dept_name FROM departments";
 $result = $conn->query($sql);
 
 
-// if (!isset($_SESSION['user'])) {
-//   header('Location: login.php');  // Redirect to login page if not authenticated
-//   exit;
-// }
+if (!isset($_SESSION['user'])) {
+  header('Location: login.php');  // Redirect to login page if not authenticated
+  exit;
+}
 
 ?>
 <!DOCTYPE html>
@@ -18,7 +18,7 @@ $result = $conn->query($sql);
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ministry of ICT & National Guidance E-Memo Tracking System</title>
+  <title>Ministry of ICT & National Guidance E-Memo Tracking System</title>  
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
   <link rel="stylesheet" type="text/css" href="../plugins/datatables/jquery.dataTables.js">
   <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -27,6 +27,10 @@ $result = $conn->query($sql);
   <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="../admin/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
+  <link rel="manifest" href="../images/site.webmanifest">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -38,7 +42,7 @@ $result = $conn->query($sql);
     include('includes/sidebar.php');
     ?>
 
-    
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
