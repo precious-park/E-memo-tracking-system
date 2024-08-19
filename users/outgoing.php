@@ -1,6 +1,7 @@
 <?php
 include('includes/dbh.php');
 session_start();
+
 $sql = "SELECT dept_id, dept_name FROM departments";
 $result = $conn->query($sql);
 
@@ -43,7 +44,9 @@ $conn->close();
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">User Dashboard</h1>
+            <h1 class="text-light m-0">Welcome, Secretary <?php echo $_SESSION['user']['last_name'];
+                                                            ?> <?php
+                                                                echo $_SESSION['user']['dept_id']; ?></h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">

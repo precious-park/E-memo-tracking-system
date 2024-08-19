@@ -27,16 +27,17 @@ $where = $stmtTot = $stmtRec = "";
 if (!empty($params['search']['value'])) {   
     $where .= " WHERE ";
     $where .= " ( subject LIKE '%" . $params['search']['value'] . "%' ";    
-    $where .= " OR author LIKE '%" . $params['search']['value'] . "%' ";
-    $where .= " OR to_department LIKE '%" . $params['search']['value'] . "%' ";
-    $where .= " OR status LIKE '%" . $params['search']['value'] . "%' ";
+    $where .= " OR Author LIKE '%" . $params['search']['value'] . "%' ";
+    $where .= " OR To_Department LIKE '%" . $params['search']['value'] . "%' ";
+    $where .= " OR Status LIKE '%" . $params['search']['value'] . "%' ";
     $where .= " OR date_created LIKE '%" . $params['search']['value'] . "%' )";
 }
 
 // Base SQL query
 // $stmt = "SELECT * FROM `memos`";
 // $stmt = "SELECT * FROM memos WHERE Author IN (SELECT email FROM users WHERE dept_id = " . $dept_id . ")";
-$stmt = $conn->prepare("SELECT * FROM memos WHERE Author IN (SELECT email FROM users WHERE dept_id = " . $dept_id . ")");
+// $stmt = $conn->prepare("SELECT * FROM memos WHERE Author IN (SELECT email FROM users WHERE dept_id = " . $dept_id . ")");
+$sql = "SELECT * FROM memos WHERE memo_id = $memoID";
 $stmt->bind_param("i", $dept_id);
 $stmt->execute();
 $result = $stmt->get_result();

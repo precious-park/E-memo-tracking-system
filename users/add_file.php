@@ -14,10 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ( '$subject','$author', '$dept','Pending','$date')";
 
     if ($conn->query($sql) === TRUE) {        
-        $_SESSION['userID'] = $conn->insert_id;
-        $_SESSION['userID'] = $user['userID'];
-        $_SESSION['author'] = $user['author'];
-        $_SESSION['status'] = $user['status'];
+        $_SESSION['memo_id'] = $conn->insert_id;        
        
         header("Location:dashboard.php");
         exit();

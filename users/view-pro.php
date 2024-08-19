@@ -31,9 +31,9 @@ $sql = "SELECT * FROM `memos` WHERE To_Department='$dept_id'";
 // Check search value exist
 if (!empty($params['search']['value'])) {   
     $where .= " AND ( subject LIKE '%" . $params['search']['value'] . "%' ";    
-    $where .= " OR author LIKE '%" . $params['search']['value'] . "%' ";
-    $where .= " OR to_department LIKE '%" . $params['search']['value'] . "%' ";
-    $where .= " OR status LIKE '%" . $params['search']['value'] . "%' ";
+    $where .= " OR Author LIKE '%" . $params['search']['value'] . "%' ";
+    $where .= " OR To_Department LIKE '%" . $params['search']['value'] . "%' ";
+    $where .= " OR Status LIKE '%" . $params['search']['value'] . "%' ";
     $where .= " OR date_created LIKE '%" . $params['search']['value'] . "%' )";
 }
 
