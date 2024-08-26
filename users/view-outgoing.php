@@ -31,6 +31,7 @@ include('includes/sidebar.php');
 
 
 
+
   <table id="memosTable" class="display" style="width:100%">
     <thead>
       <tr>
@@ -53,7 +54,7 @@ include('includes/sidebar.php');
       "processing": true,
       "serverSide": true,
       "ajax": {
-        "url": "view-pro.php", // Path to PHP script
+        "url": "outgoing-pro.php", // Path to PHP script
         "type": "POST"
       },
       "columns": [{
@@ -86,6 +87,7 @@ include('includes/sidebar.php');
  
   function sendMemo(memoId) {
     // Your send memo function logic here
+    console.log('Response from server:', response); 
 
     alert('Send memo with ID: ' + memoId);
     // You can add AJAX call or any other logic here

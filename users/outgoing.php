@@ -2,7 +2,10 @@
 include('includes/dbh.php');
 session_start();
 
-$sql = "SELECT dept_id, dept_name FROM departments";
+// Get current department
+$current_dept = $_SESSION['user']['dept_id'];
+// Fetch departments excluding the current department
+$sql = "SELECT * FROM departments WHERE dept_id != '$current_dept'";
 $result = $conn->query($sql);
 
 
@@ -103,7 +106,7 @@ $conn->close();
                     <div class=" d-flex flex-row">
                       <div class="d-flex flex-row mb-4">
                         <div class="col-4">
-                          <a href="dashboard.php"><button type="submit" class="btn btn-warning ">Save</button></a>
+                          <a href="dashboard.php"><button type="submit" class="btn btn-warning ">Send</button></a>
                         </div>
                       </div>
                       <div class="d-flex flex-row mb-4">
@@ -122,22 +125,7 @@ $conn->close();
 
         </div>
       </div><!-- /.container-fluid -->
-    </div>
-
-
-
-
-
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-      <!-- Control sidebar content goes here -->
-      <div class="p-3">
-        <h5>Title</h5>
-        <p>Sidebar content</p>
-      </div>
-    </aside>
-    <!-- /.control-sidebar -->
+    </div>   
 
     <!-- Main Footer -->
     <footer class="main-footer">
@@ -156,7 +144,7 @@ $conn->close();
 
   <script src="../plugins/jquery/jquery.min.js"></script>
   <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="../dist/js/adminlte.min.js"></script>
+  <script src="../admin/dist/js/adminlte.min.js"></script>
   <script src="../plugins/select2/js/select2.full.min.js"></script>
   <script>
     $(function() {

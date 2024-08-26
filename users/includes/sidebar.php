@@ -70,7 +70,7 @@
             </ul>
           </li>  
           <li class="nav-item">
-            <a href="audit.php" class="nav-link">
+            <a href="view_audit.php" class="nav-link">
               <i class="nav-icon fas fa-angle-left"></i>
               <p>
                 Audit Trail

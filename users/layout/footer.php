@@ -12,7 +12,8 @@
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script> 
 <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../dist/js/adminlte.min.js"></script>
+<script src="../admin/dist/js/adminlte.min.js"></script>
+<!-- <script src="../../admin/dist/js/adminlte.min.js"></script> -->
 <script src="../plugins/select2/js/select2.full.min.js"></script> 
 <script>
     $(function() {

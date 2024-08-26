@@ -1,40 +1,25 @@
-
 <?php
 session_start();
 include_once 'includes/dbh.php';
 
 // Assuming the department ID is stored in the session
 $dept_id = $_SESSION['user']['dept_id'];
-$status = 'pending';
+// $status = 'pending';
+// Get data from AJAX request
+$memo_id = $_POST['memo_id'];
+$user_email = $_POST['user_email'];
+$status = $_POST['status'];
+$date_received = $_POST['date_received'];
 
-// Prepare the SQL statement with placeholders
-$sql = "SELECT * FROM memos WHERE to_dept=? AND status=?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("is", $dept_id, $status);
+// Insert data into recipients table
+$sql = "INSERT INTO receipients (memo_id,user_email, status, date_received) 
+        VALUES ('$memo_id', '$user_email', '$status', '$date_received')";
 
-// Execute the query
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        echo "From: " . $row["from_dept"]. "<br>";
-        echo "Subject: " . $row["subject"]. "<br>"; 
-        echo "Content: " . $row["content"]. "<br>";
-        echo "Sent Date: " . $row["sent_date"]. "<br>";
-        
-        // Display options to receive/reject memo
-        echo "<form action='memo_action.php' method='POST'>";
-        echo "<input type='hidden' name='memo_id' value='" . $row['id'] . "'>";
-        echo "<button type='submit' name='action' value='receive'>Receive</button>";
-        echo "<button type='submit' name='action' value='reject'>Reject</button>";
-        echo "</form><br>";
-    }
+if ($conn->query($sql) === TRUE) {
+    echo "Memo received successfully!";
 } else {
-    echo "No memos received";
+    echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
-// Close the statement and connection
-$stmt->close();
 $conn->close();
 
