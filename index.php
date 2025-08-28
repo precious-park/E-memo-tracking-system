@@ -18,7 +18,7 @@
     <h1 class="login">Ministry of ICT & National Guidance</h1>
     <h2>E-Memo Tracking System</h2>
 
-    <a href="register.php"><button type="submit">Login</button></a>
+    <a href="login.php"><button type="submit" class="btn">Login</button></a>
   </div>
 </body>
 

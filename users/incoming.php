@@ -1,177 +1,454 @@
 <?php
+include('includes/dbh.php');
+session_start();
 
-include 'layout/header.php';
-// var_dump($_SESSION['user']);
+$sql = "SELECT dept_id, dept_name FROM departments";
+$result = $conn->query($sql);
+
+if (!isset($_SESSION['user'])) {
+  header('Location: login.php');  // Redirect to login page if not authenticated
+  exit;
+}
 ?>
-<?php
-// include('includes/header.php');
-include('includes/sidebar.php');
-?>
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <!-- <h1 class="m-0">User Dashboard</h1> -->
-          <h1 class="text-light m-0">Welcome, Secretary <?php echo $_SESSION['user']['first_name']; ?> <?php echo $_SESSION['user']['dept_id']; ?></h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">View Incoming</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
+<!DOCTYPE html>
+<html lang="en">
 
-    <!-- /.content-header -->
-    <!-- Content Wrapper. Contains page content -->
-  </div>
-  
-
-
-  <table id="memosTable" class="display" style="width:100%">
-    <thead>
-      <tr>
-        <th>Memo ID</th>
-        <th>Subject</th>
-        <th>Author</th>
-        <th>To Department</th>
-        <th>Status</th>
-        <th>Date</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-  </table>
-
-</div>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    $('#memosTable').DataTable({
-      "processing": true,
-      "serverSide": true,
-      "ajax": {
-        "url": "view-pro.php", // Path to PHP script
-        "type": "POST"
-      },
-      "columns": [{
-          "data": "memo_id"
-        },
-        {
-          "data": "subject"
-        },
-        {
-          "data": "Author"
-        },
-        {
-          "data": "To_Department"
-        },
-        {
-          "data": "Status"
-        },
-        {
-          "data": "date_created"
-        },
-        {
-          "data": null,
-          "render": function(data, type, row) {
-            return `
-              <button class="send-btn" onclick="receiveMemo(${row.memo_id})">Receive</button>
-              <button class="forward-btn" onclick="forwardMemo(${row.memo_id}, '${row.To_Department}')">Forward</button>`;
-          }
-        },
-      ]
-    });
-  });
-
-  function receiveMemo(memoId) {
-    // Your send memo function logic here
-    const userEmail = "<?php echo $_SESSION['user']['email']; ?>"; // Assuming user email is stored in session
-    const status = "Received";
-    const dateReceived = new Date().toISOString().slice(0, 19).replace('T', ' ');
-
-
-    alert('Receive memo with ID: ' + memoId);
-    // You can add AJAX call or any other logic here
-    $.ajax({
-      url: 'receive_memo.php',
-      type: 'POST',
-      data: {
-        memo_id: memoId,
-        user_email: userEmail,
-        status: status,
-        date_received: dateReceived
-      },
-      success: function(response) {
-        alert(response); // Display response from PHP script
-      },
-      error: function(xhr, status, error) {
-        console.error(error);
-      }
-    });
-  }
-
-  function forwardMemo(memoId) {
-    // Fetch the list of departments
-    alert('Forward memo with ID: ' + memoId);
-    $.ajax({
-      url: 'get_dept.php',
-      type: 'POST',
-      success: function(response) {
-        // Create and display the department dropdown
-        const departmentSelect = `<select id="departmentSelect">${response}</select>`;
-        const departmentDialog = `
-                <div id="departmentDialog" style="border: 1px solid #ccc; padding: 20px; background: #fff; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
-                    <label for="departmentSelect">Choose a department to forward the memo:</label>
-                    ${departmentSelect}
-                    <button onclick="confirmForward(${memoId})">Forward</button>
-                    <button onclick="$('#departmentDialog').remove();">Cancel</button>
-                </div>`;
-        $('body').append(departmentDialog);
-      },
-      error: function(xhr, status, error) {
-        console.error('Error fetching departments:', error);
-      }
-    });
-  }
-
-  function confirmForward(memoId) {
-    const selectedDeptId = $('#departmentSelect').val();
-
-    if (!selectedDeptId) {
-      alert('Please select a department to forward the memo.');
-      return;
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ministry of ICT & National Guidance E-Memo Tracking System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
+  <link rel="manifest" href="../images/site.webmanifest">
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    .sidebar {
+      width: 260px;
+      transition: all 0.3s ease;
     }
 
-    // AJAX request to forward the memo
-    // alert('Forward memo with ID: ' + memoId);
-    alert('Forward memo with ID: ' + memoId + ' to department ID: ' + selectedDeptId);
-    $.ajax({
-      url: 'forward_memo.php', // Change this to the appropriate PHP file that handles forwarding
-      type: 'POST',
-      data: {
-        memo_id: memoId,
-        dept_id: selectedDeptId
-      },
-      success: function(response) {
-        console.log('Response from server:', response); // Log the response to see its structure
-        if (response) {
-          alert('Memo forwarded successfully!');
-        } else {
-          alert( response);
-        }
-        // Remove the dialog
-        $('#departmentDialog').remove();
-      },
-      
-      error: function(xhr, status, error) {
-        console.error('Error forwarding memo:', error);
-        console.error('XHR:', xhr); // Log the full XHR object for more details
-        alert('An error occurred while forwarding the memo.');
-      },
-    });
-  }
-</script>
+    .main-content {
+      margin-left: 260px;
+      transition: all 0.3s ease;
+    }
 
-<?php include 'layout/footer.php'; ?>
+    @media (max-width: 768px) {
+      .sidebar {
+        margin-left: -260px;
+        position: absolute;
+        z-index: 100;
+        height: 100%;
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .sidebar.active {
+        margin-left: 0;
+      }
+    }
+
+    .nav-item:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-item.active {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-left: 4px solid white;
+
+    }
+
+    .sidebar {
+      width: 260px;
+      transition: all 0.3s ease;
+      background-color: #343a40;
+    }
+
+    .main-content {
+      margin-left: 260px;
+      transition: all 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        margin-left: -260px;
+        position: absolute;
+        z-index: 100;
+        height: 100%;
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .sidebar.active {
+        margin-left: 0;
+      }
+    }
+
+    .nav-item:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-item.active {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-left: 4px solid white;
+    }
+
+    .submenu {
+      display: none;
+      background-color: #2c3136;
+    }
+
+    .submenu.active {
+      display: block;
+    }
+
+    .has-submenu.active .fa-angle-left {
+      transform: rotate(-90deg);
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex flex-col min-h-screen">
+  <!-- Mobile Menu Button -->
+  <button id="sidebarToggle" class="md:hidden fixed top-4 left-4 z-50 bg-blue-700 text-white p-2 rounded-md shadow-lg">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </button>
+
+  <div class="flex flex-1">
+    <!-- SIDEBAR -->
+    <!-- SIDEBAR -->
+    <aside class="sidebar bg-blue-800 text-white fixed h-full overflow-y-auto">
+      <!-- Brand Logo -->
+      <div class="p-4 border-b border-blue-700 flex items-center">
+        <img src="images/coa.jpg" class="h-10 w-10 rounded-full mr-3" alt="Logo" style="opacity: .8">
+        <div>
+          <span class="font-semibold text-sm">EMTS</span>
+          <div class="text-xs text-blue-200 mt-1">
+            MINISTRY OF ICT & <br>NATIONAL GUIDANCE
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-6">
+        <ul class="space-y-1 p-2">
+          <!-- Dashboard -->
+          <li class="nav-item ">
+            <a href="dashboard.php" class="flex items-center px-3 py-3 text-white">
+
+              <span>Dashboard</span>
+            </a>
+          </li>
+
+          <!-- View Memo (Treeview) -->
+          <li class="nav-item has-submenu active">
+            <a href="#" class="flex items-center justify-between px-3 py-3 text-white submenu-toggle">
+              <div class="flex items-center">
+                <i class="fas fa-book mr-3 w-5 text-center"></i>
+                <span>View Memo</span>
+              </div>
+              <i class="fas fa-angle-left transition-transform"></i>
+            </a>
+            <ul class="submenu pl-11">
+              <li class="nav-item active">
+                <a href="incoming.php" class="flex items-center px-3 py-2 text-white">
+                  <i class="far fa-circle mr-2 text-xs"></i>
+                  <span>Incoming</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="view-outgoing.php" class="flex items-center px-3 py-2 text-white">
+                  <i class="far fa-circle mr-2 text-xs"></i>
+                  <span>Outgoing</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <!-- Register Memo (Treeview) -->
+          <li class="nav-item has-submenu">
+            <a href="#" class="flex items-center justify-between px-3 py-3 text-white submenu-toggle">
+              <div class="flex items-center">
+                <i class="fas fa-edit mr-3 w-5 text-center"></i>
+                <span>Register Memo</span>
+              </div>
+              <i class="fas fa-angle-left transition-transform"></i>
+            </a>
+            <ul class="submenu pl-11">
+              <li class="nav-item">
+                <a href="outgoing.php" class="flex items-center px-3 py-2 text-white">
+                  <i class="far fa-circle mr-2 text-xs"></i>
+                  <span>Outgoing Memo</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="outgoing.php" class="flex items-center px-3 py-2 text-white">
+                  <i class="far fa-circle mr-2 text-xs"></i>
+                  <span>Incoming Memo</span>
+                </a>
+              </li>
+            </ul>
+            
+          </li>
+
+          <!-- Audit Trail -->
+          <li class="nav-item">
+            <a href="view_audit.php" class="flex items-center px-3 py-3 text-white">
+              <i class="fas fa-history mr-3 w-5 text-center"></i>
+              <span>Audit Trail</span>
+            </a>
+          </li>
+
+          <!-- Logout -->
+          <li class="nav-item">
+            <a href="logout.php" class="flex items-center px-3 py-3 text-white">
+              <i class="fas fa-sign-out-alt mr-3 w-5 text-center"></i>
+              <span>Log Out</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- User Info at Bottom -->
+      <div class="absolute bottom-0 w-full p-4 bg-blue-900 text-blue-200 text-xs">
+        <p>Logged in as: <span class="font-semibold"><?php echo $_SESSION['user']['first_name']; ?></span></p>
+        <p>Department: <span class="font-semibold"><?php echo $_SESSION['user']['dept_id']; ?></span></p>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content flex-grow flex flex-col w-full">
+      <!-- HEADER -->
+      <header class="bg-blue-700 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+          <h1 class="text-xl font-semibold">E-Memo Tracking System</h1>
+          <nav>
+            <ol class="flex space-x-2 text-sm">
+              <li><a href="#" class="hover:underline">Home</a></li>
+              <li>/</li>
+              <li class="font-bold">Dashboard</li>
+            </ol>
+          </nav>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <main class="flex-grow">
+        <div class="max-w-7xl mx-auto px-6 py-8">
+          <!-- Greeting -->
+          <div class="bg-blue-600 text-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-lg font-bold">
+              Welcome, Secretary
+              <?php echo $_SESSION['user']['first_name']; ?>
+              (Dept ID: <?php echo $_SESSION['user']['dept_id']; ?>)
+            </h2>
+          </div>
+
+          <!-- Content Area -->
+          <div class="bg-white rounded-lg shadow-md p-6">           
+
+            <!-- Example DataTable -->
+            <!-- Incoming Memos Table -->
+            <div class="">
+              <h2 class="text-lg font-semibold text-gray-800 mb-4">Incoming Memos</h2>
+
+              <div class="overflow-x-auto">
+                <table id="memosTable" class="min-w-full border border-gray-200 rounded-lg">
+                  <thead class="bg-gray-100">
+                    <tr>
+                      <th class="px-4 py-2 text-left text-gray-600">Memo ID</th>
+                      <th class="px-4 py-2 text-left text-gray-600">Subject</th>
+                      <th class="px-4 py-2 text-left text-gray-600">Author</th>
+                      <th class="px-4 py-2 text-left text-gray-600">To Department</th>
+                      <th class="px-4 py-2 text-left text-gray-600">Status</th>
+                      <th class="px-4 py-2 text-left text-gray-600">Date</th>
+                      <th class="px-4 py-2 text-center text-gray-600">Action</th>
+                    </tr>
+                  </thead>
+                </table>
+              </div>
+            </div>
+          </div>
+      </main>
+
+      <!-- FOOTER -->
+      <footer class="bg-blue-700 text-white mt-auto">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between text-sm">
+          <span>&copy; <?php echo date('Y'); ?> EMTS - All Rights Reserved</span>
+          <span>MINISTRY OF ICT & NATIONAL GUIDANCE</span>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Init DataTable -->
+  <script>
+    $(document).ready(function() {
+      $('#example').DataTable();
+
+      // Mobile sidebar toggle
+      $('#sidebarToggle').click(function() {
+        $('.sidebar').toggleClass('active');
+      });
+
+      // Close sidebar when clicking outside on mobile
+      $(document).click(function(e) {
+        if ($(window).width() < 768) {
+          if (!$(e.target).closest('.sidebar').length && !$(e.target).is('#sidebarToggle')) {
+            $('.sidebar').removeClass('active');
+          }
+        }
+      });
+    });
+  </script>
+  <script>
+    // Submenu toggle
+    document.querySelectorAll('.submenu-toggle').forEach(toggle => {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        const parent = this.closest('.has-submenu');
+        const submenu = parent.querySelector('.submenu');
+
+        parent.classList.toggle('active');
+        submenu.classList.toggle('active');
+      });
+    });
+
+    // Mobile sidebar toggle
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+      document.querySelector('.sidebar').classList.toggle('active');
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      $('#memosTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+          "url": "view-pro.php",
+          "type": "POST"
+        },
+        "columns": [{
+            "data": "memo_id"
+          },
+          {
+            "data": "subject"
+          },
+          {
+            "data": "Author"
+          },
+          {
+            "data": "To_Department"
+          },
+          {
+            "data": "Status"
+          },
+          {
+            "data": "date_created"
+          },
+          {
+            "data": null,
+            "render": function(data, type, row) {
+              return `
+              <button class="bg-green-500 text-white px-3 py-1 rounded-md text-sm hover:bg-green-600" 
+                onclick="receiveMemo(${row.memo_id})">Receive</button>
+              <button class="bg-blue-500 text-white px-3 py-1 rounded-md text-sm ml-2 hover:bg-blue-600" 
+                onclick="forwardMemo(${row.memo_id}, '${row.To_Department}')">Forward</button>
+            `;
+            }
+          },
+        ]
+      });
+    });
+
+    function receiveMemo(memoId) {
+      const userEmail = "<?php echo $_SESSION['user']['email']; ?>";
+      const status = "Received";
+      const dateReceived = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+      $.ajax({
+        url: 'receive_memo.php',
+        type: 'POST',
+        data: {
+          memo_id: memoId,
+          user_email: userEmail,
+          status: status,
+          date_received: dateReceived
+        },
+        success: function(response) {
+          alert(response);
+        },
+        error: function(xhr, status, error) {
+          console.error(error);
+        }
+      });
+    }
+
+    function forwardMemo(memoId) {
+      $.ajax({
+        url: 'get_dept.php',
+        type: 'POST',
+        success: function(response) {
+          const departmentDialog = `
+          <div id="departmentDialog" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-xl shadow-lg p-6 w-96">
+              <h3 class="text-lg font-semibold text-gray-800 mb-4">Forward Memo</h3>
+              <label for="departmentSelect" class="block text-sm font-medium text-gray-700">Choose Department</label>
+              <select id="departmentSelect" class="mt-2 w-full border-gray-300 rounded-md shadow-sm">
+                ${response}
+              </select>
+              <div class="mt-4 flex justify-end space-x-2">
+                <button onclick="confirmForward(${memoId})" 
+                  class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Forward</button>
+                <button onclick="$('#departmentDialog').remove()" 
+                  class="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400">Cancel</button>
+              </div>
+            </div>
+          </div>
+        `;
+          $('body').append(departmentDialog);
+        },
+        error: function(xhr, status, error) {
+          console.error('Error fetching departments:', error);
+        }
+      });
+    }
+
+    function confirmForward(memoId) {
+      const selectedDeptId = $('#departmentSelect').val();
+      if (!selectedDeptId) {
+        alert('Please select a department.');
+        return;
+      }
+      $.ajax({
+        url: 'forward_memo.php',
+        type: 'POST',
+        data: {
+          memo_id: memoId,
+          dept_id: selectedDeptId
+        },
+        success: function(response) {
+          alert('Memo forwarded successfully!');
+          $('#departmentDialog').remove();
+        },
+        error: function(xhr, status, error) {
+          console.error('Error forwarding memo:', error);
+          alert('An error occurred.');
+        }
+      });
+    }
+  </script>
+
+</body>
+
+</html>
