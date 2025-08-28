@@ -23,7 +23,7 @@ $deptResult = $conn->query($sql);
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Admin Panel - EMTS</title>
+<title>Ministry of ICT & National Guidance E-Memo Tracking System | Admin Panel</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
