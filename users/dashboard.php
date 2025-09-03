@@ -17,7 +17,7 @@ if (!isset($_SESSION['user'])) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ministry of ICT & National Guidance E-Memo Tracking System</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
   <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
@@ -26,6 +26,7 @@ if (!isset($_SESSION['user'])) {
   <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="/src/output.css">
   <style>
     .sidebar {
       width: 260px;
@@ -67,7 +68,7 @@ if (!isset($_SESSION['user'])) {
     .sidebar {
       width: 260px;
       transition: all 0.3s ease;
-      background-color: #343a40;
+      
     }
 
     .main-content {
@@ -116,7 +117,7 @@ if (!isset($_SESSION['user'])) {
   </style>
 </head>
 
-<body class="bg-gray-100 flex flex-col min-h-screen">
+<body class=" flex flex-col min-h-screen">
   <!-- Mobile Menu Button -->
   <button id="sidebarToggle" class="md:hidden fixed top-4 left-4 z-50 bg-blue-700 text-white p-2 rounded-md shadow-lg">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -127,7 +128,7 @@ if (!isset($_SESSION['user'])) {
   <div class="flex flex-1">
     
     <!-- SIDEBAR -->
-    <aside class="sidebar bg-blue-800 text-white fixed h-full overflow-y-auto">
+    <aside class="sidebar bg-blue-600 text-white fixed h-full overflow-y-auto">
       <!-- Brand Logo -->
       <div class="p-4 border-b border-blue-700 flex items-center">
         <img src="images/coa.jpg" class="h-10 w-10 rounded-full mr-3" alt="Logo" style="opacity: .8">
