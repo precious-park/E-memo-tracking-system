@@ -125,7 +125,7 @@ if (!isset($_SESSION['user'])) {
   </button>
 
   <div class="flex flex-1">
-    <!-- SIDEBAR -->
+    
     <!-- SIDEBAR -->
     <aside class="sidebar bg-blue-800 text-white fixed h-full overflow-y-auto">
       <!-- Brand Logo -->
