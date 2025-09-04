@@ -91,7 +91,7 @@ CREATE TABLE `memos` (
   `Author` varchar(50) NOT NULL,
   `To_Department` varchar(50) NOT NULL,
   `Status` varchar(50) NOT NULL,
-  `date_created` date NOT NULL DEFAULT current_timestamp()
+  `date_created` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
